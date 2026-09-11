@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>EzMP3 - YouTube to MP3/MP4 Converter | โหลดเพลงจากยูทูปฟรี</title>
+    <meta name="description" content="EzMP3 is a fast, free, and easy YouTube to MP3 and MP4 converter. ดาวน์โหลดเพลงจากยูทูป แปลงไฟล์ YouTube เป็น MP3 ฟรี โหลดวิดีโอ YouTube อย่างรวดเร็ว">
+    <meta name="keywords" content="youtube to mp3, youtube to mp4, youtube downloader, โหลดเพลง youtube, โหลดเพลงจากยูทูป, แปลงไฟล์ youtube เป็น mp3, โหลดวิดีโอ youtube, download music from youtube, ytmp3">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon Dynamic SVG Icon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2312181f'/><rect x='10' y='10' width='80' height='80' rx='20' fill='%2300F2FE' fill-opacity='0.2'/><path d='M42 32C42 30.4 43.8 29.4 45.1 30.3L67.4 45C68.5 45.8 68.5 47.5 67.4 48.3L45.1 63C43.8 63.9 42 62.9 42 61.3V32Z' fill='%23FF0844'/><rect x='24' y='42' width='4' height='16' rx='2' fill='%2300F2FE'/><rect x='31' y='34' width='4' height='32' rx='2' fill='%2300F2FE'/><rect x='72' y='40' width='4' height='20' rx='2' fill='%234FACFE'/></svg>">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #d1d5db;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* Header Navigation */
+        header {
+            width: 100%;
+            max-width: 760px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .header-logo:hover {
+            opacity: 0.85;
+        }
+
+        .header-logo-text {
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 50%, #FF0844 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #38bdf8;
+        }
+
+        /* Custom Language Dropdown Styles */
+        .lang-dropdown-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .lang-main-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 6px 12px;
+            color: #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .lang-main-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .lang-menu {
+            position: absolute;
+            right: 0;
+            top: 115%;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            z-index: 100;
+            min-width: 120px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .lang-option {
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #cbd5e1;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .lang-option:hover {
+            background-color: #334155;
+            color: #38bdf8;
+        }
+
+        /* Hero Main Logo Section */
+        .main-logo-wrapper {
+            margin: 20px 0 25px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .main-logo-text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-logo-title {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 40%, #FF0844 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .main-logo-subtitle {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: -4px;
+            font-weight: 600;
+        }
+
+        /* Container Card */
+        .container {
+            width: 90%;
+            max-width: 650px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .input-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #f1f5f9;
+            display: block;
+        }
+
+        /* Preview Card */
+        .video-preview-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-thumbnail {
+            width: 120px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            flex-shrink: 0;
+        }
+
+        .video-info {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .video-title {
+            color: #f8fafc;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-status-tag {
+            color: #10b981;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 14px 16px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #f8fafc;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .url-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+        }
+
+        .url-input::placeholder {
+            color: #64748b;
+        }
+
+        /* Conversion Status Box */
+        .status-box-tech {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pulse-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(239, 68, 68, 0.2);
+            border-top-color: #ef4444;
+            border-radius: 50%;
+            animation: spin 0.8s infinite linear;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .format-selector {
+            display: flex;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .format-btn {
+            padding: 8px 20px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .format-btn.active {
+            background-color: #334155;
+            color: #38bdf8;
+        }
+
+        .btn-convert {
+            padding: 12px 32px;
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-grow: 1;
+            max-width: 200px;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+        }
+
+        .btn-convert:hover {
+            background-color: #0369a1;
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #334155 !important;
+            color: #94a3b8 !important;
+            box-shadow: none !important;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569 !important;
+            color: #f8fafc !important;
+        }
+
+        .btn-download-glow {
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 18px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-download-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(239, 68, 68, 0.6);
+        }
+
+        /* SEO Content */
+        .content-section {
+            width: 90%;
+            max-width: 650px;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .content-section h1 {
+            color: #f8fafc;
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .content-section p {
+            margin-bottom: 20px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0 30px 0;
+        }
+
+        .feature-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .feature-card h4 {
+            color: #38bdf8;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 0;
+        }
+
+        .steps-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .steps-list li {
+            margin-bottom: 12px;
+        }
+
+        .steps-list strong {
+            color: #f1f5f9;
+        }
+
+        /* SEO Text Block */
+        .seo-text-block {
+            width: 90%;
+            max-width: 650px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            color: #475569;
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        
+        .seo-text-block strong {
+            font-weight: normal;
+        }
+
+        footer {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        footer a {
+            color: #64748b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="index.html" class="header-logo">
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(0, 242, 254, 0.3));">
+                <defs>
+                    <linearGradient id="headerBgGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00F2FE" />
+                        <stop offset="100%" stop-color="#4FACFE" />
+                    </linearGradient>
+                    <linearGradient id="headerGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+                    </linearGradient>
+                    <linearGradient id="headerPlayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FF0844" />
+                        <stop offset="100%" stop-color="#FFB199" />
+                    </linearGradient>
+                </defs>
+                <rect x="5" y="5" width="90" height="90" rx="24" fill="url(#headerBgGlow)" fill-opacity="0.15" stroke="url(#headerBgGlow)" stroke-width="2" />
+                <rect x="12" y="12" width="76" height="76" rx="20" fill="url(#headerGlass)" stroke="white" stroke-opacity="0.2" stroke-width="1.5" />
+                <rect x="26" y="42" width="4" height="16" rx="2" fill="#00F2FE" opacity="0.8" />
+                <rect x="34" y="34" width="4" height="32" rx="2" fill="#00F2FE" />
+                <path d="M46 32C46 30.398 47.788 29.441 49.123 30.323L71.371 45.006C72.548 45.783 72.548 47.517 71.371 48.294L49.123 62.977C47.788 63.859 46 62.902 46 61.300V32Z" fill="url(#headerPlayGrad)" />
+                <rect x="76" y="40" width="4" height="20" rx="2" fill="#4FACFE" opacity="0.9" />
+            </svg>
+            <span class="header-logo-text">EzMP3</span>
+        </a>
+
+        <div class="nav-group">
+            <nav>
+                <a href="index.html" class="active" data-i18n="navHome">Home</a>
+                <a href="faq.html" data-i18n="navFaq">FAQ</a>
+            </nav>
+            
+            <!-- Custom Language Dropdown -->
+            <div class="lang-dropdown-container">
+                <button id="lang-btn" class="lang-main-btn" onclick="toggleLangDropdown(event)">
+                    <img id="current-lang-flag" src="https://flagcdn.com/w20/th.png" alt="TH Flag" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;">
+                    <span id="current-lang-text">TH</span>
+                    <span style="font-size: 10px; margin-left: 2px;">▼</span>
+                </button>
+                <div id="lang-menu" class="lang-menu" style="display: none;">
+                    <div class="lang-option" onclick="changeLanguage('th')">
+                        <img src="https://flagcdn.com/w20/th.png" alt="TH" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;"> <span>ไทย</span>
+                    </div>
+                    <div class="lang-option" onclick="changeLanguage('en')">
+                        <img src="https://flagcdn.com/w20/gb.png" alt="EN" style="width: 20px; height: 14px; border-radius: 2px; object-fit: cover;"> <span>English</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Logo -->
+    <div class="main-logo-wrapper">
+        <svg width="68" height="68" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 6px 16px rgba(0, 242, 254, 0.4));">
+            <defs>
+                <linearGradient id="mainBgGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00F2FE" />
+                    <stop offset="100%" stop-color="#4FACFE" />
+                </linearGradient>
+                <linearGradient id="mainGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+                </linearGradient>
+                <linearGradient id="mainPlayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FF0844" />
+                    <stop offset="100%" stop-color="#FFB199" />
+                </linearGradient>
+            </defs>
+            <rect x="5" y="5" width="90" height="90" rx="24" fill="url(#mainBgGlow)" fill-opacity="0.15" stroke="url(#mainBgGlow)" stroke-width="2" />
+            <rect x="12" y="12" width="76" height="76" rx="20" fill="url(#mainGlass)" stroke="white" stroke-opacity="0.2" stroke-width="1.5" />
+            <rect x="26" y="42" width="4" height="16" rx="2" fill="#00F2FE" opacity="0.8" />
+            <rect x="34" y="34" width="4" height="32" rx="2" fill="#00F2FE" />
+            <path d="M46 32C46 30.398 47.788 29.441 49.123 30.323L71.371 45.006C72.548 45.783 72.548 47.517 71.371 48.294L49.123 62.977C47.788 63.859 46 62.902 46 61.300V32Z" fill="url(#mainPlayGrad)" />
+            <rect x="76" y="40" width="4" height="20" rx="2" fill="#4FACFE" opacity="0.9" />
+        </svg>
+
+        <div class="main-logo-text-group">
+            <span class="main-logo-title">EzMP3</span>
+            <span class="main-logo-subtitle" data-i18n="mainSubtitle">Converter</span>
+        </div>
+    </div>
+
+    <!-- Converter Card Container -->
+    <div class="container">
+        <label class="input-label" for="yt-url" data-i18n="inputLabel">Paste your YouTube link</label>
+
+        <div id="preview-card" class="video-preview-card" style="display: none;">
+            <img id="video-thumb" class="video-thumbnail" src="" alt="Thumbnail">
+            <div class="video-info">
+                <span class="video-status-tag" data-i18n="tagReady">Ready for Download</span>
+                <div id="video-title" class="video-title"></div>
+            </div>
+        </div>
+
+        <input type="text" id="yt-url" class="url-input" data-i18n="inputPlaceholder" placeholder="Paste your link here..." value="">
+
+        <div id="status-box" class="status-box-tech" style="display: none;">
+            <div id="spinner" class="pulse-spinner"></div>
+            <span id="status-text" data-i18n="statusInit">initializing conversion</span>
+        </div>
+
+        <div class="action-row">
+            <div id="format-selector" class="format-selector">
+                <button class="format-btn active" id="btn-mp3" onclick="selectFormat('MP3')">MP3</button>
+                <button class="format-btn" id="btn-mp4" onclick="selectFormat('MP4')">MP4</button>
+            </div>
+
+            <button id="convert-btn" class="btn-convert" data-i18n="btnConvert" onclick="startConvert()">Convert</button>
+
+            <button id="download-btn" class="btn-download-glow" style="display: none;" data-i18n="btnDownload" onclick="triggerDownload()">
+                Download
+            </button>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <h1 data-i18n="seoTitle">YouTube to MP3 Converter</h1>
+        <p data-i18n="seoDesc"><strong>EzMP3</strong> is the fastest and easiest tool to convert YouTube videos to MP3 or MP4 format. Enjoy free unlimited downloads without registering or installing extra software.</p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4 data-i18n="feat1Title">⚡ High Speed</h4>
+                <p data-i18n="feat1Desc">Instant audio extraction with maximum bitrates up to 320kbps.</p>
+            </div>
+            <div class="feature-card">
+                <h4 data-i18n="feat2Title">🔒 Safe & Clean</h4>
+                <p data-i18n="feat2Desc">100% safe from malware and viruses. No sign-up required.</p>
+            </div>
+            <div class="feature-card">
+                <h4 data-i18n="feat3Title">📱 All Devices</h4>
+                <p data-i18n="feat3Desc">Works smoothly on Android, iOS, Windows, and macOS browsers.</p>
+            </div>
+        </div>
+
+        <h3 style="color: #f1f5f9; margin-bottom: 12px;" data-i18n="howToTitle">How to convert and download a YouTube video</h3>
+        <ol class="steps-list">
+            <li data-i18n="step1"><strong>Copy YouTube URL:</strong> Open YouTube.com, find your desired video, and copy its web address.</li>
+            <li data-i18n="step2"><strong>Paste & Select Format:</strong> Paste the link into the input field above, then choose your preferred format (<strong>MP3</strong> or <strong>MP4</strong>).</li>
+            <li data-i18n="step3"><strong>Click Convert:</strong> Press the <strong>"Convert"</strong> button to start downloading instantly.</li>
+        </ol>
+    </div>
+
+    <!-- SEO Subdued Text Block -->
+    <div class="seo-text-block">
+        <p data-i18n="seoTextFull">
+            EzMP3 is a free online tool to <strong>convert YouTube to MP3</strong> and <strong>YouTube to MP4</strong>. Whether you're looking to <strong>download music from YouTube</strong>, use a reliable <strong>YouTube downloader</strong>, or save high-quality MP4 videos, our platform offers the best solution. สำหรับผู้ใช้งานชาวไทยที่กำลังค้นหาวิธี <strong>โหลดเพลงจากยูทูป</strong> หรือ <strong>แปลงไฟล์ YouTube เป็น MP3</strong> ระบบของเราสามารถช่วยให้คุณ <strong>โหลดวิดีโอ YouTube</strong> และ <strong>โหลดเพลงลงเครื่อง</strong> มือถือหรือคอมพิวเตอร์ได้อย่างรวดเร็ว ไม่ต้องติดตั้งแอปพลิเคชัน ใช้งานเป็น <strong>YouTube Audio Downloader</strong> ฟรี 100% ปลอดภัยและรองรับทุกอุปกรณ์
+        </p>
+    </div>
+
+    <!-- Footer Links -->
+    <footer>
+        <a href="Contact.html" data-i18n="footerContact">Contact</a>
+        <a href="copyright.html" data-i18n="footerCopyright">Copyright Claims</a>
+        <a href="privacy.html" data-i18n="footerPrivacy">Privacy Policy</a>
+        <a href="terms.html" data-i18n="footerTerms">Terms of Use</a>
+    </footer>
+
+<script>
+    // ----------------------
+    // ระบบเปลี่ยนภาษา (i18n)
+    // ----------------------
+    const i18n = {
+        en: {
+            metaTitle: "EzMP3 - YouTube to MP3/MP4 Converter | Free Download",
+            navHome: "Home",
+            navFaq: "FAQ",
+            mainSubtitle: "Converter",
+            inputLabel: "Paste your YouTube link",
+            inputPlaceholder: "Paste your link here...",
+            btnConvert: "Convert",
+            btnConvertMore: "Convert more",
+            btnDownload: "Download",
+            statusInit: "initializing conversion",
+            statusExtract: "extracting video info",
+            tagReady: "Ready for Download",
+            seoTitle: "YouTube to MP3 Converter",
+            seoDesc: "<strong>EzMP3</strong> is the fastest and easiest tool to convert YouTube videos to MP3 or MP4 format. Enjoy free unlimited downloads without registering or installing extra software.",
+            feat1Title: "⚡ High Speed",
+            feat1Desc: "Instant audio extraction with maximum bitrates up to 320kbps.",
+            feat2Title: "🔒 Safe & Clean",
+            feat2Desc: "100% safe from malware and viruses. No sign-up required.",
+            feat3Title: "📱 All Devices",
+            feat3Desc: "Works smoothly on Android, iOS, Windows, and macOS browsers.",
+            howToTitle: "How to convert and download a YouTube video",
+            step1: "<strong>Copy YouTube URL:</strong> Open YouTube.com, find your desired video, and copy its web address.",
+            step2: "<strong>Paste & Select Format:</strong> Paste the link into the input field above, then choose your preferred format (<strong>MP3</strong> or <strong>MP4</strong>).",
+            step3: "<strong>Click Convert:</strong> Press the <strong>\"Convert\"</strong> button to start downloading instantly.",
+            seoTextFull: "EzMP3 is a free online tool to <strong>convert YouTube to MP3</strong> and <strong>YouTube to MP4</strong>. Whether you're looking to <strong>download music from YouTube</strong>, use a reliable <strong>YouTube downloader</strong>, or save high-quality MP4 videos, our platform offers the best solution. We provide a seamless experience to <strong>download YouTube videos</strong> to your mobile or computer quickly without any app installation. 100% Free, secure, and supports all devices.",
+            alertEmpty: "Please paste a YouTube link first.",
+            alertInvalid: "Invalid YouTube link.",
+            footerContact: "Contact",
+            footerCopyright: "Copyright Claims",
+            footerPrivacy: "Privacy Policy",
+            footerTerms: "Terms of Use"
+        },
+        th: {
+            metaTitle: "EzMP3 - แปลงไฟล์ YouTube เป็น MP3/MP4 | โหลดเพลงฟรี",
+            navHome: "หน้าแรก",
+            navFaq: "คำถามที่พบบ่อย",
+            mainSubtitle: "ตัวแปลงไฟล์",
+            inputLabel: "วางลิงก์ YouTube ของคุณที่นี่",
+            inputPlaceholder: "วางลิงก์ที่นี่...",
+            btnConvert: "แปลงไฟล์",
+            btnConvertMore: "แปลงไฟล์เพิ่ม",
+            btnDownload: "ดาวน์โหลด",
+            statusInit: "กำลังเตรียมการแปลงไฟล์...",
+            statusExtract: "กำลังดึงข้อมูลวิดีโอ",
+            tagReady: "พร้อมดาวน์โหลด",
+            seoTitle: "ตัวแปลงไฟล์ YouTube เป็น MP3",
+            seoDesc: "<strong>EzMP3</strong> คือเครื่องมือที่รวดเร็วและง่ายที่สุดในการแปลงวิดีโอ YouTube เป็น MP3 หรือ MP4 ดาวน์โหลดฟรีไม่อั้น ไม่ต้องสมัครสมาชิกหรือติดตั้งโปรแกรมใดๆ",
+            feat1Title: "⚡ ความเร็วสูง",
+            feat1Desc: "ดึงเสียงคุณภาพเยี่ยมด้วยความเร็วสูง บิทเรตสูงสุด 320kbps",
+            feat2Title: "🔒 ปลอดภัย 100%",
+            feat2Desc: "ปราศจากไวรัสและมัลแวร์ ไม่จำเป็นต้องลงทะเบียน",
+            feat3Title: "📱 รองรับทุกอุปกรณ์",
+            feat3Desc: "ใช้งานได้ลื่นไหลทั้งบนมือถือ Android, iOS, Windows และ macOS",
+            howToTitle: "วิธีแปลงไฟล์และดาวน์โหลดวิดีโอ YouTube",
+            step1: "<strong>คัดลอกลิงก์ YouTube:</strong> เปิด YouTube ค้นหาวิดีโอที่ต้องการ แล้วคัดลอก URL ของวิดีโอนั้น",
+            step2: "<strong>วางลิงก์ & เลือกรูปแบบ:</strong> วางลิงก์ในช่องด้านบน แล้วเลือกรูปแบบไฟล์ที่ต้องการ (<strong>MP3</strong> หรือ <strong>MP4</strong>)",
+            step3: "<strong>กดปุ่มแปลงไฟล์:</strong> กดปุ่ม <strong>\"แปลงไฟล์\"</strong> เพื่อเริ่มต้นการดาวน์โหลดในทันที",
+            seoTextFull: "EzMP3 เป็นเครื่องมือออนไลน์ฟรีสำหรับ <strong>แปลงไฟล์ YouTube เป็น MP3</strong> และ <strong>YouTube เป็น MP4</strong> สำหรับผู้ใช้งานชาวไทยที่กำลังค้นหาวิธี <strong>โหลดเพลงจากยูทูป</strong> หรือดาวน์โหลดเพลงฟรี ระบบของเราสามารถช่วยให้คุณ <strong>โหลดวิดีโอ YouTube</strong> และ <strong>โหลดเพลงลงเครื่อง</strong> มือถือหรือคอมพิวเตอร์ได้อย่างรวดเร็ว ไม่ต้องติดตั้งแอปพลิเคชัน ใช้งานเป็น <strong>YouTube Downloader</strong> ได้ฟรี 100% ปลอดภัยและรองรับทุกอุปกรณ์",
+            alertEmpty: "กรุณาวางลิงก์ YouTube ก่อนครับ",
+            alertInvalid: "ลิงก์ YouTube ไม่ถูกต้องครับ",
+            footerContact: "ติดต่อเรา",
+            footerCopyright: "แจ้งลิขสิทธิ์",
+            footerPrivacy: "นโยบายความเป็นส่วนตัว",
+            footerTerms: "ข้อตกลงการใช้งาน"
+        }
+    };
+
+    // ดึงภาษาจาก LocalStorage (ค่าเริ่มต้นคือ th ภาษาไทย)
+    let currentLang = localStorage.getItem('lang') || 'th';
+
+    // เปิด-ปิด เมนูดรอปดาวน์ภาษา
+    function toggleLangDropdown(event) {
+        event.stopPropagation();
+        const menu = document.getElementById('lang-menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // ปิดเมนูเวลาคลิกพื้นที่อื่นนอกปุ่ม
+    window.addEventListener('click', () => {
+        const menu = document.getElementById('lang-menu');
+        if (menu) menu.style.display = 'none';
+    });
+
+    function updateLanguageUI() {
+        document.title = i18n[currentLang].metaTitle;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (i18n[currentLang][key]) {
+                if(el.tagName === 'INPUT' && el.type === 'text') {
+                     el.placeholder = i18n[currentLang][key];
+                } else {
+                     el.innerHTML = i18n[currentLang][key];
+                }
+            }
+        });
+
+        // อัปเดตรูปธงและข้อความบนปุ่มหลักตามภาษาปัจจุบัน
+        const flagEl = document.getElementById('current-lang-flag');
+        const textEl = document.getElementById('current-lang-text');
+        
+        if (currentLang === 'th') {
+            flagEl.src = 'https://flagcdn.com/w20/th.png';
+            flagEl.alt = 'TH Flag';
+            textEl.innerText = 'TH';
+        } else {
+            flagEl.src = 'https://flagcdn.com/w20/gb.png';
+            flagEl.alt = 'EN Flag';
+            textEl.innerText = 'EN';
+        }
+        
+        localStorage.setItem('lang', currentLang);
+    }
+
+    function changeLanguage(lang) {
+        currentLang = lang;
+        updateLanguageUI();
+        document.getElementById('lang-menu').style.display = 'none';
+    }
+
+    // ทำงานทันทีเมื่อโหลดหน้าเว็บ
+    document.addEventListener('DOMContentLoaded', updateLanguageUI);
+
+
+    // ----------------------
+    // ระบบ Converter เดิม
+    // ----------------------
+    let selectedFormat = 'MP3';
+    let downloadUrl = '';
+
+    const shopeeLinks = [
+        "https://s.shopee.co.th/8KpRN65Q00",
+        "https://s.shopee.co.th/40gS0RA36Z",
+        "https://s.shopee.co.th/5AsPbLxr5s"
+    ];
+
+    function selectFormat(format) {
+        selectedFormat = format;
+        document.getElementById('btn-mp3').classList.toggle('active', format === 'MP3');
+        document.getElementById('btn-mp4').classList.toggle('active', format === 'MP4');
+    }
+
+    function getYoutubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    async function startConvert() {
+        const urlInput = document.getElementById('yt-url');
+        const inputUrl = urlInput.value.trim();
+
+        if (!inputUrl) {
+            alert(i18n[currentLang].alertEmpty);
+            return;
+        }
+
+        const videoId = getYoutubeId(inputUrl);
+        if (!videoId) {
+            alert(i18n[currentLang].alertInvalid);
+            return;
+        }
+
+        const statusBox = document.getElementById('status-box');
+        const statusText = document.getElementById('status-text');
+        const spinner = document.getElementById('spinner');
+        const previewCard = document.getElementById('preview-card');
+        const videoTitle = document.getElementById('video-title');
+        const videoThumb = document.getElementById('video-thumb');
+        const formatSelector = document.getElementById('format-selector');
+        const convertBtn = document.getElementById('convert-btn');
+        const downloadBtn = document.getElementById('download-btn');
+
+        urlInput.style.display = 'none';
+        statusBox.style.display = 'flex';
+        statusText.innerText = i18n[currentLang].statusInit;
+        spinner.style.display = 'block';
+        formatSelector.style.display = 'none';
+        convertBtn.disabled = true;
+
+        videoThumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+        try {
+            statusText.innerText = `${i18n[currentLang].statusExtract} (${videoId})...`;
+            
+            const oembedUrl = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
+            const response = await fetch(oembedUrl);
+            
+            if (response.ok) {
+                const data = await response.json();
+                videoTitle.innerText = data.title;
+            } else {
+                videoTitle.innerText = `YouTube Video (${videoId})`;
+            }
+
+            setTimeout(() => {
+                statusBox.style.display = 'none';
+                previewCard.style.display = 'flex';
+
+                downloadUrl = `http://localhost:5000/download?url=${encodeURIComponent(inputUrl)}&format=${selectedFormat.toLowerCase()}`;
+
+                convertBtn.setAttribute('data-i18n', 'btnConvertMore');
+                convertBtn.innerText = i18n[currentLang].btnConvertMore;
+                convertBtn.classList.add('btn-secondary');
+                convertBtn.disabled = false;
+                convertBtn.onclick = resetConverter;
+
+                downloadBtn.style.display = 'inline-block';
+            }, 1000);
+
+        } catch (error) {
+            statusBox.style.display = 'none';
+            videoTitle.innerText = `YouTube Video (${videoId})`;
+            previewCard.style.display = 'flex';
+
+            downloadUrl = `http://localhost:5000/download?url=${encodeURIComponent(inputUrl)}&format=${selectedFormat.toLowerCase()}`;
+
+            convertBtn.setAttribute('data-i18n', 'btnConvertMore');
+            convertBtn.innerText = i18n[currentLang].btnConvertMore;
+            convertBtn.classList.add('btn-secondary');
+            convertBtn.disabled = false;
+            convertBtn.onclick = resetConverter;
+
+            downloadBtn.style.display = 'inline-block';
+        }
+    }
+
+    function triggerDownload() {
+        if (!downloadUrl) return;
+
+        const randomIndex = Math.floor(Math.random() * shopeeLinks.length);
+        const randomShopeeUrl = shopeeLinks[randomIndex];
+        window.open(randomShopeeUrl, '_blank');
+
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.setAttribute('download', '');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function resetConverter() {
+        const urlInput = document.getElementById('yt-url');
+        urlInput.value = '';
+        urlInput.style.display = 'block';
+        
+        document.getElementById('status-box').style.display = 'none';
+        document.getElementById('status-text').style.color = '#94a3b8';
+        document.getElementById('preview-card').style.display = 'none';
+        document.getElementById('format-selector').style.display = 'flex';
+        
+        const convertBtn = document.getElementById('convert-btn');
+        convertBtn.setAttribute('data-i18n', 'btnConvert');
+        convertBtn.innerText = i18n[currentLang].btnConvert;
+        convertBtn.classList.remove('btn-secondary');
+        convertBtn.onclick = startConvert;
+        
+        document.getElementById('download-btn').style.display = 'none';
+    }
+</script>
+</body>
+</html>
