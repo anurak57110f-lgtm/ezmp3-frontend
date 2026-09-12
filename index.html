@@ -94,8 +94,8 @@
     </div>
 
     <script>
-        // กำหนด URL Backend บน Render ของคุณที่นี่
-        const BACKEND_URL = "https://ezmp3-backend.onrender.com";
+        // กำหนด URL Backend บน Render ตัวใหม่ที่นี่
+        const BACKEND_URL = "https://ezmp3.onrender.com";
 
         async function startDownload() {
             const urlInput = document.getElementById('urlInput').value.trim();
@@ -113,7 +113,7 @@
             statusDiv.innerHTML = "กำลังประมวลผลและแปลงไฟล์ รอสักครู่...";
 
             try {
-                // สร้างลิงก์เรียกไปยัง Backend
+                // สร้างลิงก์เรียกไปยัง Backend ตัวใหม่
                 const targetUrl = `${BACKEND_URL}/download?url=${encodeURIComponent(urlInput)}&format=${format}`;
                 
                 // สั่งเปิดดาวน์โหลดผ่านเบราว์เซอร์โดยตรง
