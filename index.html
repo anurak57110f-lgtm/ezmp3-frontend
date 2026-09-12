@@ -841,7 +841,7 @@
                 statusBox.style.display = 'none';
                 previewCard.style.display = 'flex';
 
-                downloadUrl = `http://localhost:5000/download?url=${encodeURIComponent(inputUrl)}&format=${selectedFormat.toLowerCase()}`;
+                downloadUrl = `https://ezmp3-backend.onrender.com/download?url=${encodeURIComponent(inputUrl)}&format=${selectedFormat.toLowerCase()}`;
 
                 convertBtn.setAttribute('data-i18n', 'btnConvertMore');
                 convertBtn.innerText = i18n[currentLang].btnConvertMore;
@@ -857,7 +857,7 @@
             videoTitle.innerText = `YouTube Video (${videoId})`;
             previewCard.style.display = 'flex';
 
-            downloadUrl = `http://localhost:5000/download?url=${encodeURIComponent(inputUrl)}&format=${selectedFormat.toLowerCase()}`;
+            downloadUrl = `https://ezmp3-backend.onrender.com/download?url=${encodeURIComponent(inputUrl)}&format=${selectedFormat.toLowerCase()}`;
 
             convertBtn.setAttribute('data-i18n', 'btnConvertMore');
             convertBtn.innerText = i18n[currentLang].btnConvertMore;
